@@ -4,15 +4,15 @@
 #include <vector>
 
 void callback_func(const message::coordinates& attack_point) {
-	ROS_INFO_STREAM("attack point = ( " << attack_point.x << " ; " << attack_point.y << " )");
+	ROS_INFO_STREAM("attack point = ( " << (int) attack_point.x << " ; " << (int) attack_point.y << " )");
 
 	std::vector<message::coordinates> defence_points;
 	for(int i = 0; i < 3; i++) {
 		message::coordinates defence_point;
 		defence_point.x = rand() % 5 + 1;
 		defence_point.y = rand() % 5 + 1;
-		defence_point.push_back(defence_point);
-		ROS_INFO_STREAM("defence point = ( " << attack_point.x << " ; " << attack_point.y << " )");
+		defence_points.push_back(defence_point);
+		ROS_INFO_STREAM("defence point = ( " << (int) defence_point.x << " ; " << (int) defence_point.y << " )");
 	}
 
 	int probability = 5;
@@ -26,12 +26,12 @@ void callback_func(const message::coordinates& attack_point) {
 
 	ROS_INFO_STREAM("Probability = " << probability);
 
-	if( rand() % 100 + 1 <= threshold) {
-		ROS_STREAM_INFO("Attacking missile shot down");
+	if( rand() % 100 + 1 <= probability) {
+		ROS_INFO_STREAM("Attacking missile shot down");
 	} else {
-		ROS_STREAM_INFO("Attacking missile didn't shoot down");
+		ROS_INFO_STREAM("Attacking missile didn't shoot down");
 	}
-	ROS_STREAM_INFO("----------------------------------");		
+	ROS_INFO_STREAM("----------------------------------");		
 }
 
 int main(int argc, char **argv) {
@@ -39,7 +39,7 @@ int main(int argc, char **argv) {
 	
 	srand(time(0));
 
-	ros::NodeHandler nh;
+	ros::NodeHandle nh;
 
 	ros::Subscriber sub = nh.subscribe("heaven", 1000, &callback_func);
 

@@ -1,11 +1,11 @@
 #include <ros/ros.h>
 #include "message/coordinates.h"
-#include <stdlib.g>
+#include <stdlib.h>
 
 int main(int argc, char **argv) {
 	ros::init(argc, argv, "publisher");
 
-	ros::NodeHandler nh;
+	ros::NodeHandle nh;
 
 	ros::Publisher pub = nh.advertise<message::coordinates>("heaven", 1000);
 
@@ -19,7 +19,7 @@ int main(int argc, char **argv) {
 		attack_point.x = rand() % 5 + 1;
 		attack_point.y = rand() % 5 + 1;
 
-		ROS_INFO_STREAM("attack point = ( " << attack_point.x << " ; " << attack_point.y << " )");
+		ROS_INFO_STREAM("attack point = ( " << (int) attack_point.x << " ; " << (int) attack_point.y << " )");
 
 		pub.publish(attack_point);
 
